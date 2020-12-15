@@ -4,7 +4,7 @@ import time
 import random
 from tkinter import font
 window = Tk()
-window.title("Сапёр")
+window.title("Memory")
 
 
 timer = 0
@@ -49,7 +49,6 @@ class Card():
 def loop():
     global open_now, timer, right, gl_time
     if right != 16:
-        gl_time+=1
         if open_now == 2:
             if timer == 500:
                 get_images = []
@@ -67,8 +66,9 @@ def loop():
                 timer = 0
             else:
                 timer += 1
+        window.after(1, loop)
     else:
-        seconds = (abs(time.time() - gl_time))*0.00098
+        seconds = int((abs(time.time() - gl_time)))
         sec = str(int(seconds%60))
         if len(sec) == 1:
             sec = '0' + sec
@@ -78,7 +78,7 @@ def loop():
         hours = int((seconds//60)//60)
         win_lbl["text"] = "%d:%s:%s"%(hours, minutes, sec)
         win_lbl.grid(row=0, column=0, columnspan = 4)
-    window.after(1, loop)
+    
 win_lbl = Label(window, text=0, font='Bahnschrift 30')
 lbls = []
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
